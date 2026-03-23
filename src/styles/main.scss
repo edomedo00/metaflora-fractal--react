@@ -1,0 +1,148 @@
+@use "./fonts" as *;
+@use "./variables" as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+
+  @media (max-width: 1536px) {
+    font-size: 52%;
+  }
+
+  @media (max-width: 1280px) {
+    font-size: 45%;
+  }
+}
+
+body {
+  font-family: "Ancizar Serif";
+  font-size: 2.8rem;
+  // line-height: 3.6rem;
+  font-weight: 400;
+
+  background-color: $bg-primary;
+}
+
+.text__text {
+  line-height: 3.6rem;
+}
+
+main {
+  margin: 0 8rem 0 8rem;
+
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(2, auto);
+}
+
+.top-line {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin-top: 8rem;
+
+  border-bottom: 2px solid #000000;
+}
+
+.text {
+  grid-column: 1 / span 6;
+
+  .text-below {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    padding: 4rem 2rem 2rem 2rem;
+  }
+
+  &__title {
+    width: auto;
+    font-size: 9.6rem;
+    line-height: 100%;
+    letter-spacing: 0.5rem;
+
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    padding-left: 2rem;
+
+    border-bottom: 2px solid #000000;
+
+    // border-right: 2px solid #000000;
+    // border-left: 2px solid #000000;
+  }
+
+  &__text {
+  }
+
+  &__contact {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 2rem;
+
+    &__names {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__instagram {
+      display: flex;
+      flex-direction: column;
+      text-align: end;
+    }
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: $black;
+}
+
+.lobby-right {
+  grid-column: 7 / span 6;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-left: 2px solid #000000;
+
+  .plant-container {
+    flex: 1;
+    min-height: 0;
+    border-bottom: 2px solid #000000;
+  }
+  .start {
+    align-self: center;
+    padding: 5rem 2rem 2rem 2rem;
+  }
+}
+
+.btn {
+  text-decoration: none;
+  font-family: "Ancizar Serif";
+  font-size: 4rem;
+  line-height: 3.6rem;
+  font-weight: 400;
+
+  background-color: $bg-primary;
+  border: 1px solid $green;
+  // border: none;
+  letter-spacing: 0.5rem;
+  padding: 1.5rem 2rem;
+  border-radius: 0.5rem;
+}
+
+.btn-start {
+  color: $green;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+    letter-spacing: 0.6rem;
+  }
+}
