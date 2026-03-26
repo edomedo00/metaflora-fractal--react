@@ -11,7 +11,7 @@ const PlantSketch = () => {
       let cam: any;
 
       p.setup = () => {
-        const canvas = p.createCanvas(
+        p.createCanvas(
           containerRef.current!.clientWidth,
           containerRef.current!.clientHeight,
           p.WEBGL,
