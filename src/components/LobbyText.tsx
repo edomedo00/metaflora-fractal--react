@@ -20,9 +20,7 @@ const LobbyText: React.FC = () => {
         <p className="text__text">
           resultan árboles porque las figuras siguen un proceso de generacion
           similar al de sus inspiraciones —en un entorno determinista y
-          controlado—, y porque estan construidos con metaforas intimamente
-          ligadas a lo que han significado estas formas en la experiencia real,
-          sensorial y abstracta para nosotros
+          controlado—
         </p>
         <div className="text__contact">
           <div className="text__contact__names">
