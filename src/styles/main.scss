@@ -65,6 +65,7 @@ body {
 
   @include respond(phone) {
     padding: 2rem 0rem;
+    margin: 0 4rem;
   }
 }
 
@@ -237,10 +238,6 @@ body {
       padding: 2rem 1rem;
       margin-bottom: 4rem;
     }
-
-    @include respond(phone) {
-      letter-spacing: 0.2rem;
-    }
   }
 }
 
@@ -264,6 +261,11 @@ body {
 
   @include respond(tab-port) {
     letter-spacing: 0.5rem;
+  }
+
+  @include respond(phone) {
+    letter-spacing: 0.2rem;
+    font-size: var(--font-title);
   }
 
   &:hover {

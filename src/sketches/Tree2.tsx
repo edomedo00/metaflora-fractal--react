@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from "react";
 import p5Types from "p5";
 import p5 from "p5";
 
-// const FONT_PATH = "../../assets/fonts/ancizar-serif-latin-400-normal.ttf";
-// const TEXT_PATH = "../../assets/texts/2.txt";
-const FONT_PATH =
-  "/arboles_con-texto--react/assets/fonts/ancizar-serif-latin-400-normal.ttf";
-const TEXT_PATH = "/arboles_con-texto--react/assets/texts/2.txt";
+const FONT_PATH = "../../assets/fonts/ancizar-serif-latin-400-normal.ttf";
+const TEXT_PATH = "../../assets/texts/2.txt";
+// const FONT_PATH =
+//   "/arboles_con-texto--react/assets/fonts/ancizar-serif-latin-400-normal.ttf";
+// const TEXT_PATH = "/arboles_con-texto--react/assets/texts/2.txt";
 
 const SPACING_FACTOR = 0.95;
 
