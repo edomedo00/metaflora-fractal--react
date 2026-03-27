@@ -50,31 +50,41 @@ const TreeSketch: React.FC<TreeSketchProps> = ({ setPage, page }) => {
             className={`btn btn-return btn-return--${page}`}
             onClick={() => setPage(0)}
           >
-            volver
+            <span className="text-blur__word">volver</span>
           </button>
           <div className="top-line--interface"></div>
         </div>
         <div className="interface">
           {/* eslint-disable-next-line */}
-          <div className="interface__text">{`${text}`}</div>
+          <div className="interface__text">
+            <p className="text-blur">
+              {" "}
+              {text.split(" ").map((word, i) => (
+                <span key={i} className="text-blur__word">
+                  {word}{" "}
+                </span>
+              ))}
+            </p>
+          </div>
           <div className="interface__controls" ref={controlsRef}>
             <button
               className={`btn btn-controls btn-controls--${page}`}
               onClick={() => treeControls.current?.nextSeed()}
             >
-              regenerar
+              <span className="text-blur__word">regenerar</span>
             </button>
             <button
               className={`btn btn-controls btn-controls--${page}`}
               onClick={() => treeControls.current?.nextCamera()}
             >
-              cambiar vista
+              <span className="text-blur__word">cambiar</span>
+              <span className="text-blur__word"> vista</span>
             </button>
             <button
               className={`btn btn-controls btn-controls--${page}`}
               onClick={() => setPage((page + 1) % 4)}
             >
-              avanzar
+              <span className="text-blur__word">avanzar</span>
             </button>
           </div>
         </div>

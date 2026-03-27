@@ -24,7 +24,7 @@ const LobbyPlant: React.FC<LobbyPlantProps> = ({ setPage }) => {
       </div>
       <div className="start">
         <button className="btn btn-start" onClick={() => setPage(1)}>
-          comenzar
+          visitar
         </button>
       </div>
     </div>

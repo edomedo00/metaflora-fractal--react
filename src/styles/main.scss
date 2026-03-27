@@ -304,9 +304,17 @@ body {
   -webkit-user-select: none;
   -ms-user-select: none;
 
+  pointer-events: none;
+
   @include respond(phone) {
     padding: 0 4rem;
   }
+}
+
+.btn,
+.header,
+.interface__controls {
+  pointer-events: auto;
 }
 
 .header {
@@ -432,6 +440,16 @@ body {
   }
 }
 
+.text-blur {
+  &__word {
+    @include respond(phone) {
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      border-radius: 2px;
+    }
+  }
+}
+
 .btn-controls {
   font-size: 2.8rem;
   line-height: 3.6rem;
@@ -444,6 +462,7 @@ body {
 
   @include respond(phone) {
     font-size: 2.5rem;
+    padding: 0.5rem 1rem;
   }
 
   @media (hover: hover) {

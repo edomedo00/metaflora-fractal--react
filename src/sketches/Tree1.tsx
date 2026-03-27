@@ -35,6 +35,8 @@ interface Tree1Props {
 const Tree1: React.FC<Tree1Props> = ({ onReady }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const isMobile = !window.matchMedia("(hover: hover)").matches;
+
   const state = useRef({
     fontTree: undefined as p5Types.Font | undefined,
     textTree: [] as string[],
@@ -44,7 +46,7 @@ const Tree1: React.FC<Tree1Props> = ({ onReady }) => {
     text_trunk: "",
 
     angle: 0,
-    ANGLE_INCREMENT: 0.05,
+    ANGLE_INCREMENT: isMobile ? 0.02 : 0.05,
 
     cameras: [] as p5Types.Camera[],
     camIndex: 0,
@@ -57,6 +59,8 @@ const Tree1: React.FC<Tree1Props> = ({ onReady }) => {
 
     const sketch = (p: p5) => {
       p.setup = async () => {
+        p.pixelDensity(isMobile ? 1 : p.displayDensity());
+        p.frameRate(isMobile ? 30 : 60);
         p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL).parent(
           containerRef.current!,
         );
@@ -136,7 +140,7 @@ const Tree1: React.FC<Tree1Props> = ({ onReady }) => {
           p.translate(0, -tipLen, 0);
         }
 
-        if (len > 13) {
+        if (len > (isMobile ? 20 : 13)) {
           for (let i = 0; i < 5; i++) {
             p.rotateY(72);
             p.push();
@@ -231,7 +235,9 @@ const Tree1: React.FC<Tree1Props> = ({ onReady }) => {
         p.push();
         p.textSize(6);
 
-        for (let i = 0; i < 500; i++) {
+        const count = isMobile ? 150 : 500;
+
+        for (let i = 0; i < count; i++) {
           p.push();
           p.fill(
             80 + p.random(-20, 20),
