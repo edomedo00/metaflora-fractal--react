@@ -31,26 +31,26 @@ const LobbyText: React.FC = () => {
         <div className="text__contact">
           <div className="text__contact__names">
             <div>
-              <p className="names-text">Poesía por Seydi Pineda </p>
+              <p className="names-text">Poesía </p>
               {breakpoint === "phone" ? (
                 <a
                   href="https://www.instagram.com/seydidemiel/"
                   className="instagram-small-text"
                 >
-                  (@seydidemiel)
+                  @seydidemiel
                 </a>
               ) : (
                 <></>
               )}
             </div>
             <div>
-              <p className="names-text">Código por Edmundo Medel</p>
+              <p className="names-text">Código </p>
               {breakpoint === "phone" ? (
                 <a
                   href="https://www.instagram.com/_edomedo___/"
                   className="instagram-small-text"
                 >
-                  (@_edomedo___)
+                  @_edomedo___
                 </a>
               ) : (
                 <></>

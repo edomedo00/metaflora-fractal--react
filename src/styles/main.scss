@@ -174,12 +174,12 @@ body {
 }
 
 .names-text {
-  padding-right: 2rem;
+  padding-right: 1rem;
   display: inline-flex;
 }
 
 .instagram-small-text {
-  font-size: 2rem;
+  // font-size: 2rem;
   color: $green;
   text-decoration: none;
 }
@@ -499,4 +499,6 @@ body {
   }
 }
 
-// las camaras para movil
+::selection {
+  background-color: #f0f0e1;
+}

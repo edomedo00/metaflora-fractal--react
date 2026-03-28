@@ -26,7 +26,7 @@ const TreeSketch: React.FC<TreeSketchProps> = ({ setPage, page }) => {
   const [hasHover, setHasHover] = React.useState(getHasHover());
 
   useEffect(() => {
-    fetch(`/arboles_con-texto--react/assets/texts/${page}.txt`)
+    fetch(`/assets/texts/${page}.txt`)
       .then((res) => res.text())
       .then((data) => setText(data))
       .catch((err) => console.error("Failed to load text:", err));

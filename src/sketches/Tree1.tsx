@@ -2,21 +2,23 @@ import React, { useEffect, useRef } from "react";
 import p5Types from "p5";
 import p5 from "p5";
 
-// const TEXT_PATH = "/arboles_con-texto--react/assets/texts/3.txt";
-// const FONT_PATH =
-//   "/arboles_con-texto--react/assets/fonts/ancizar-serif-latin-400-normal.ttf";
-
-const FONT_PATH =
-  "/arboles_con-texto--react/assets/fonts/ancizar-serif-latin-400-normal.ttf";
-const TEXT_PATH = "/arboles_con-texto--react/assets/texts/1.txt";
+const FONT_PATH = "/assets/fonts/ancizar-serif-latin-400-normal.ttf";
+const TEXT_PATH = "/assets/texts/1.txt";
 
 const SPACING_FACTOR = 0.95;
 
-const CAM_PRESETS = [
-  { pos: [-72, -116, 345], look: [-72, -116, 0] },
+const CAM_PRESETS_DESKTOP = [
+  { pos: [-72, -116, 299.9], look: [-72, -116, 0] },
   { pos: [110, -256, 205], look: [-70, -86, 36] },
   { pos: [-20.6, 15.2, 201.1], look: [-97.5, -213.6, -64.7] },
   { pos: [-87, -145, 223], look: [-87, -145, 0] },
+];
+
+const CAM_PRESETS_MOBILE = [
+  { pos: [-46.3, -121.6, 345], look: [-46.3, -121.6, 0] },
+  { pos: [179.6, -310.2, 256.6], look: [-61.5, -82.6, 30.3] },
+  { pos: [49.7, -2.7, 232.1], look: [-78, -184.9, -68.9] },
+  { pos: [-61.6, -139.1, 260.3], look: [-61.6, -139.1, 0] },
 ];
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -35,7 +37,11 @@ interface Tree1Props {
 const Tree1: React.FC<Tree1Props> = ({ onReady }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const isMobile = !window.matchMedia("(hover: hover)").matches;
+  const isMobile =
+    /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) ||
+    !window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  const isMobileRes = window.innerWidth < 600;
 
   const state = useRef({
     fontTree: undefined as p5Types.Font | undefined,
@@ -59,7 +65,7 @@ const Tree1: React.FC<Tree1Props> = ({ onReady }) => {
 
     const sketch = (p: p5) => {
       p.setup = async () => {
-        p.pixelDensity(isMobile ? 1 : p.displayDensity());
+        p.pixelDensity(isMobile ? 1 : 3);
         p.frameRate(isMobile ? 30 : 60);
         p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL).parent(
           containerRef.current!,
@@ -86,7 +92,9 @@ const Tree1: React.FC<Tree1Props> = ({ onReady }) => {
           console.error("Failed to load assets:", error);
         }
 
-        s.cameras = CAM_PRESETS.map(({ pos, look }) => {
+        const PRESETS = isMobileRes ? CAM_PRESETS_MOBILE : CAM_PRESETS_DESKTOP;
+
+        s.cameras = PRESETS.map(({ pos, look }) => {
           const c = p.createCamera();
           c.setPosition(...(pos as [number, number, number]));
           c.lookAt(...(look as [number, number, number]));
@@ -98,13 +106,17 @@ const Tree1: React.FC<Tree1Props> = ({ onReady }) => {
         onReady?.({
           nextCamera: () => {
             const s = state.current;
+            const PRESETS = isMobileRes
+              ? CAM_PRESETS_MOBILE
+              : CAM_PRESETS_DESKTOP;
+
             s.camIndex = (s.camIndex + 1) % s.cameras.length;
+
             s.cameras.forEach((c, i) => {
-              c.setPosition(
-                ...(CAM_PRESETS[i].pos as [number, number, number]),
-              );
-              c.lookAt(...(CAM_PRESETS[i].look as [number, number, number]));
+              c.setPosition(...(PRESETS[i].pos as [number, number, number]));
+              c.lookAt(...(PRESETS[i].look as [number, number, number]));
             });
+
             p.setCamera(s.cameras[s.camIndex]);
           },
           nextSeed: () => {
@@ -115,9 +127,9 @@ const Tree1: React.FC<Tree1Props> = ({ onReady }) => {
 
       p.draw = () => {
         p.background(255, 255, 239);
-        // if (!isMobile) {
-        // }
-        p.orbitControl();
+        if (!isMobile) {
+          p.orbitControl();
+        }
         p.rotateY(state.current.angle);
         p.randomSeed(state.current.seed);
 
@@ -142,7 +154,7 @@ const Tree1: React.FC<Tree1Props> = ({ onReady }) => {
           p.translate(0, -tipLen, 0);
         }
 
-        if (len > (isMobile ? 20 : 13)) {
+        if (len > (isMobile ? 20 : 17)) {
           for (let i = 0; i < 5; i++) {
             p.rotateY(72);
             p.push();
@@ -237,7 +249,7 @@ const Tree1: React.FC<Tree1Props> = ({ onReady }) => {
         p.push();
         p.textSize(6);
 
-        const count = isMobile ? 150 : 500;
+        const count = isMobile ? 300 : 500;
 
         for (let i = 0; i < count; i++) {
           p.push();
@@ -257,16 +269,24 @@ const Tree1: React.FC<Tree1Props> = ({ onReady }) => {
         p.pop();
       };
 
-      // p.doubleClicked = () => {
-      //   state.current.camIndex =
-      //     (state.current.camIndex + 1) % state.current.cameras.length;
+      // p.keyPressed = () => {
+      //   if (p.key !== "s" && p.key !== "S") return;
 
-      //   state.current.cameras.forEach((c, i) => {
-      //     c.setPosition(...(CAM_PRESETS[i].pos as [number, number, number]));
-      //     c.lookAt(...(CAM_PRESETS[i].look as [number, number, number]));
-      //   });
+      //   const cam = state.current.cameras[state.current.camIndex];
 
-      //   p.setCamera(state.current.cameras[state.current.camIndex]);
+      //   const pos = [
+      //     parseFloat(cam.eyeX.toFixed(1)),
+      //     parseFloat(cam.eyeY.toFixed(1)),
+      //     parseFloat(cam.eyeZ.toFixed(1)),
+      //   ];
+      //   const look = [
+      //     parseFloat(cam.centerX.toFixed(1)),
+      //     parseFloat(cam.centerY.toFixed(1)),
+      //     parseFloat(cam.centerZ.toFixed(1)),
+      //   ];
+
+      //   const line = `{ pos: [${pos}], look: [${look}] },`;
+      //   console.log(line);
       // };
 
       p.windowResized = () => p.resizeCanvas(p.windowWidth, p.windowHeight);
