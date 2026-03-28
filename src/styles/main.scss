@@ -95,7 +95,7 @@ body {
 }
 
 .text {
-  grid-column: 1 / span 6;
+  grid-column: 1 / span 7;
 
   @include respond(tab-land) {
     grid-column: 1 / span 7;
@@ -194,7 +194,7 @@ body {
 }
 
 .lobby-right {
-  grid-column: 7 / span 6;
+  grid-column: 8 / span 5;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr auto;

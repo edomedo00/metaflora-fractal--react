@@ -11,7 +11,7 @@ const PlantSketch = ({ cameraZ = 201.3 }: PlantSketchProps) => {
   useEffect(() => {
     const sketch = (p: p5) => {
       let angle = 0;
-      const ANGLE_INC = 0.1;
+      const ANGLE_INC = 0.02;
       let cam: any;
 
       p.setup = () => {
