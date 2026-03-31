@@ -17,6 +17,7 @@ const TreeSketch: React.FC<TreeSketchProps> = ({ setPage, page }) => {
   const [text, setText] = React.useState<string>("");
 
   const headerRef = useRef<HTMLDivElement>(null);
+  const instructionsRef = useRef<HTMLDivElement>(null);
   const controlsRef = useRef<HTMLDivElement>(null);
   const treeControls = useRef<Tree3Controls | null>(null);
 
@@ -43,18 +44,22 @@ const TreeSketch: React.FC<TreeSketchProps> = ({ setPage, page }) => {
   useEffect(() => {
     const header = headerRef.current;
     const controls = controlsRef.current;
-    if (!header || !controls) return;
+    const instructions = instructionsRef.current;
+    if (!header || !controls || !instructions) return;
 
-    if (!hasHover) {
-      // mobile: always visible
-      header.style.transition = "none";
-      header.style.opacity = "1";
-      controls.style.transition = "none";
-      controls.style.opacity = "1";
-      return;
-    }
+    header.style.transition = "none";
+    header.style.opacity = "1";
+    controls.style.transition = "none";
+    controls.style.opacity = "1";
+    instructions.style.transition = "none";
+    instructions.style.opacity = "1";
 
-    // desktop: fade out after 6s, then hover to show
+    (header as any)._cleanup?.();
+    (controls as any)._cleanup?.();
+    (instructions as any)._cleanup?.();
+
+    if (!hasHover) return;
+
     const fadeTransition = "opacity 2s cubic-bezier(0.72, 0.14, 0.8, 0.3)";
     const showTransition = "opacity 0.8s ease";
 
@@ -95,18 +100,35 @@ const TreeSketch: React.FC<TreeSketchProps> = ({ setPage, page }) => {
         controls.removeEventListener("mouseenter", onControlsEnter);
         controls.removeEventListener("mouseleave", onControlsLeave);
       };
+    }, 9000);
+
+    const timerInstructions = setTimeout(() => {
+      fadeOut(instructions);
     }, 6000);
 
     return () => {
       clearTimeout(timer);
+      clearTimeout(timerInstructions);
       (header as any)._cleanup?.();
       (controls as any)._cleanup?.();
+      (instructions as any)._cleanup?.();
     };
-  }, [hasHover]);
+  }, [hasHover, page]);
 
   return (
     <div className={`tree-main ${hasHover ? "has-hover" : "no-hover"}`}>
       <div className="interface-container">
+        {hasHover ? (
+          <div className="instructions" ref={instructionsRef}>
+            {/* <span>Clic Izq y Der para navegar</span> */}
+            {/* <span>Scroll para hacer zoom</span> */}
+            <span>Puedes navegar por el espacio</span>
+            <span>Clic Izq, Der, y Scroll</span>
+          </div>
+        ) : (
+          <></>
+        )}
+
         <div className="header" ref={headerRef}>
           <button
             className={`btn btn-return btn-return--${page}`}
